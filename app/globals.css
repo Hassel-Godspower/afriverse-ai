@@ -1471,4 +1471,435 @@ select {
         font-size: 17px;
     }
 
+} 
+
+/* =========================================================
+   AFRIVERSE ASK INTERFACE
+========================================================= */
+
+.ask-interface {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+
+/* =========================================================
+   CONTEXT
+========================================================= */
+
+.context-panel {
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.025);
+    padding: 22px;
+    margin-bottom: 40px;
+}
+
+.context-title {
+    font-size: 10px;
+    letter-spacing: .18em;
+    opacity: .55;
+    margin-bottom: 20px;
+}
+
+.context-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,.08);
+}
+
+.context-grid > div {
+    background: #080808;
+    padding: 18px;
+}
+
+.context-grid small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: .15em;
+    opacity: .45;
+    margin-bottom: 8px;
+}
+
+.context-grid strong {
+    display: block;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.welcome-mark {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(255,255,255,.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    font-size: 13px;
+    letter-spacing: .1em;
+}
+
+.welcome h1 {
+    font-size: clamp(42px, 6vw, 76px);
+    margin: 12px 0;
+    letter-spacing: -.05em;
+}
+
+.welcome p {
+    max-width: 600px;
+    margin: 0 auto 35px;
+    opacity: .55;
+    line-height: 1.7;
+}
+
+.eyebrow {
+    font-size: 10px;
+    letter-spacing: .2em;
+    opacity: .55;
+}
+
+
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
+
+.suggestions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.suggestions button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.12);
+    color: inherit;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: .25s ease;
+}
+
+.suggestions button:hover {
+    border-color: rgba(255,255,255,.35);
+}
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.message {
+    margin-bottom: 45px;
+}
+
+.message-label {
+    font-size: 9px;
+    letter-spacing: .18em;
+    opacity: .4;
+    margin-bottom: 12px;
+}
+
+.message-content {
+    font-size: 17px;
+    line-height: 1.8;
+    max-width: 850px;
+}
+
+.user-message {
+    padding-left: 15%;
+}
+
+.user-message .message-content {
+    opacity: .7;
+}
+
+
+/* =========================================================
+   ANSWER INTELLIGENCE
+========================================================= */
+
+.answer-intelligence {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    margin-top: 30px;
+
+    border: 1px solid rgba(255,255,255,.10);
+}
+
+.intelligence-block {
+    padding: 18px;
+    border-right:
+        1px solid rgba(255,255,255,.08);
+}
+
+.intelligence-block:last-child {
+    border-right: 0;
+}
+
+.intelligence-block span {
+    display: block;
+    font-size: 8px;
+    letter-spacing: .16em;
+    opacity: .4;
+    margin-bottom: 8px;
+}
+
+.intelligence-block strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   SOURCES
+========================================================= */
+
+.sources {
+    margin-top: 28px;
+}
+
+.sources-title {
+    font-size: 9px;
+    letter-spacing: .17em;
+    opacity: .45;
+    margin-bottom: 10px;
+}
+
+.source {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: inherit;
+
+    border-top:
+        1px solid rgba(255,255,255,.08);
+
+    padding: 13px 0;
+}
+
+.source span {
+    font-size: 9px;
+    opacity: .4;
+}
+
+.source strong {
+    font-size: 12px;
+    font-weight: 500;
+    flex: 1;
+}
+
+.source small {
+    opacity: .4;
+}
+
+
+/* =========================================================
+   PROVENANCE
+========================================================= */
+
+.provenance {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 18px;
+
+    font-size: 9px;
+    letter-spacing: .08em;
+
+    opacity: .5;
+}
+
+.provenance span {
+    letter-spacing: .16em;
+}
+
+.provenance strong {
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   PROCESSING
+========================================================= */
+
+.processing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.processing span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: av-pulse 1.2s infinite;
+}
+
+.processing span:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.processing span:nth-child(3) {
+    animation-delay: .3s;
+}
+
+.processing small {
+    width: 100%;
+    margin-top: 10px;
+    opacity: .4;
+    font-size: 10px;
+}
+
+@keyframes av-pulse {
+
+    0%,
+    100% {
+        opacity: .2;
+        transform: scale(.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.ask-input {
+    margin-top: 60px;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.025);
+}
+
+.ask-input textarea {
+    width: 100%;
+    resize: vertical;
+
+    background: transparent;
+    border: 0;
+
+    color: inherit;
+
+    padding: 20px;
+
+    outline: none;
+
+    font: inherit;
+
+    font-size: 15px;
+}
+
+.input-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-top:
+        1px solid rgba(255,255,255,.08);
+
+    padding: 10px 12px;
+}
+
+.input-footer span {
+    font-size: 9px;
+    opacity: .35;
+}
+
+.input-footer button {
+    border: 0;
+    padding: 12px 18px;
+
+    background: white;
+    color: black;
+
+    cursor: pointer;
+
+    font-size: 11px;
+}
+
+.input-footer button:disabled {
+    opacity: .4;
+    cursor: wait;
+}
+
+
+/* =========================================================
+   MVP NOTE
+========================================================= */
+
+.mvp-note {
+    text-align: center;
+    font-size: 9px;
+    opacity: .3;
+    max-width: 650px;
+    margin: 18px auto;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .context-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .answer-intelligence {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .intelligence-block:nth-child(2) {
+        border-right: 0;
+    }
+
+    .intelligence-block:nth-child(-n+2) {
+        border-bottom:
+            1px solid rgba(255,255,255,.08);
+    }
+
+    .user-message {
+        padding-left: 0;
+    }
+
+    .input-footer {
+        align-items: flex-end;
+        gap: 12px;
+    }
+
+    .input-footer span {
+        max-width: 55%;
+        line-height: 1.5;
+    }
+
 }
