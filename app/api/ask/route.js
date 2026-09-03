@@ -1,15 +1,23 @@
+import { NextResponse } from "next/server";
+import { askAfriVerse } from "@/lib/gemini";
+
 export async function POST(request) {
 
     try {
 
         const body = await request.json();
 
-        const question = body.question?.trim();
+        const {
+            question,
+            country = "Nigeria",
+            region = "Northern Nigeria",
+            language = "English",
+            domain = "Agriculture",
+        } = body;
 
+        if (!question || !question.trim()) {
 
-        if (!question) {
-
-            return Response.json(
+            return NextResponse.json(
                 {
                     error: "Question is required."
                 },
@@ -20,67 +28,138 @@ export async function POST(request) {
 
         }
 
+        const response = await askAfriVerse({
+            question: question.trim(),
+            country,
+            region,
+            language,
+            domain,
+        });
+
+        const answer = response.text || "";
 
         /*
-         * MVP RESPONSE ENGINE
-         *
-         * This is intentionally simulated for the first prototype.
-         *
-         * Later this route will call Gemini and the
-         * AfriVerse Knowledge Engine.
+         * Extract grounding metadata.
          */
 
+        const groundingMetadata =
+            response.candidates?.[0]?.groundingMetadata || null;
 
-        let answer =
-            "AfriVerse would process this question through its contextual knowledge layer, combining relevant African knowledge, provenance and validation signals before generating an answer.";
+        /*
+         * Extract web sources.
+         */
 
+        const sources = [];
 
-        if (
-            question.toLowerCase().includes("farming") ||
-            question.toLowerCase().includes("agriculture")
-        ) {
+        const groundingChunks =
+            groundingMetadata?.groundingChunks || [];
 
-            answer =
-                "Across different parts of Africa, agricultural practices are shaped by rainfall patterns, soil conditions, local crops and accumulated community knowledge. For northern Nigeria, a production AfriVerse system could combine community contributions, agricultural research and expert validation to identify practices relevant to specific locations and seasons.";
+        groundingChunks.forEach((chunk) => {
 
-        }
+            if (chunk.web) {
 
+                sources.push({
+                    title: chunk.web.title || "Web source",
+                    url: chunk.web.uri || "",
+                });
 
-        if (
-            question.toLowerCase().includes("language") ||
-            question.toLowerCase().includes("languages")
-        ) {
-
-            answer =
-                "Nigeria is highly linguistically diverse, with hundreds of languages spoken across different regions. A production AfriVerse knowledge layer could connect language information to geography, community contributions, cultural context and linguistic resources.";
-
-        }
-
-
-        return Response.json({
-
-            answer,
-
-            context:
-                "Nigeria · African contextual knowledge",
-
-            confidence: 82,
-
-            provenance: [
-                "Community knowledge",
-                "Research",
-                "Expert validation"
-            ]
+            }
 
         });
 
+        /*
+         * Remove duplicate sources.
+         */
+
+        const uniqueSources = sources.filter(
+            (source, index, self) =>
+                index ===
+                self.findIndex(
+                    (item) => item.url === source.url
+                )
+        );
+
+        /*
+         * Determine confidence.
+         *
+         * This is intentionally labelled as an
+         * MVP heuristic, not scientific confidence.
+         */
+
+        let confidence = "Medium";
+
+        if (uniqueSources.length >= 3) {
+            confidence = "High";
+        }
+
+        if (uniqueSources.length === 0) {
+            confidence = "Low";
+        }
+
+        /*
+         * Determine validation status.
+         *
+         * Since this MVP is not yet connected to
+         * the AfriVerse expert-validation database,
+         * we explicitly say so.
+         */
+
+        const validation = "Pending";
+
+        /*
+         * Knowledge classification.
+         */
+
+        const knowledgeType =
+            uniqueSources.length > 0
+                ? "Web-grounded knowledge"
+                : "Model knowledge";
+
+        return NextResponse.json({
+
+            answer,
+
+            context: {
+                country,
+                region,
+                language,
+                domain,
+            },
+
+            knowledge: {
+                type: knowledgeType,
+            },
+
+            validation,
+
+            confidence,
+
+            sources: uniqueSources,
+
+            provenance: {
+                provider: "Google Search grounding",
+                status:
+                    uniqueSources.length > 0
+                        ? "Grounded"
+                        : "Not grounded",
+            },
+
+            generatedAt:
+                new Date().toISOString(),
+
+        });
 
     } catch (error) {
 
-        return Response.json(
+        console.error(
+            "AfriVerse API error:",
+            error
+        );
+
+        return NextResponse.json(
             {
                 error:
-                    "Unable to process AfriVerse request."
+                    "AfriVerse could not process this request."
             },
             {
                 status: 500
